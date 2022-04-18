@@ -10,7 +10,7 @@ typedef vector<vector<int> > matrix;
 int main()
 {
     // enter the no of vertices
-    int n = 6;
+    int n = 3;
 
     // No. of edges in the undirected graph
     int Nz = 0;
