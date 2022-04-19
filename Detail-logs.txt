@@ -1,0 +1,24 @@
+
+Reserach Paper: 
+https://github.com/jshun/ligra
+
+
+
+
+
+OpenMP: 
+https://hpc-tutorials.llnl.gov/openmp/
+hypack2013
+
+
+
+Triangle Counting: 
+https://github.com/akanshu22/Triangle-Counting-Problem-in-Apache-Spark/blob/master/TriangleCountingProblem_Assignment3.ipynb
+
+
+
+Youtube OpenMp:
+https://www.youtube.com/channel/UCNp-uk36t-bnvHr3A_snQtg/videos
+https://www.youtube.com/playlist?list=PLLX-Q6B8xqZ8n8bwjGdzBJ25X2utwnoEG
+https://www.openmp.org/wp-content/uploads/omp-hands-on-SC08.pdf
+
