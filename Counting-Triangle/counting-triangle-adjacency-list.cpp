@@ -6,32 +6,42 @@ using namespace std;
 int countTriangle=0;
 
 void displayAdjList(list<int> adj_list[], int v) {
-    vector <int> a;    vector <int> b;
-  for(int i = 0; i<v; i++) {
-     cout << i << "---> ";
-     list<int> :: iterator it;
-     list<int> :: iterator temp1;
-     a.clear();
-     for(temp1 = adj_list[i].begin();temp1 != adj_list[i].end();temp1++){
+
+    vector <int> a;
+    vector <int> b;
+  for(int i = 0; i<v; i++) 
+  {
+    cout << i << "---> ";
+    list<int> :: iterator it;
+    list<int> :: iterator temp1;
+    for(temp1 = adj_list[i].begin();temp1 != adj_list[i].end();temp1++)
+    {
             a.push_back(*temp1);
-        }
-     for(it = adj_list[i].begin(); it != adj_list[i].end(); ++it) {
+    }
+    for(it = adj_list[i].begin(); it != adj_list[i].end(); ++it)
+    {
          //stores the list of neighbours in *it pointer
         cout << *it << "  ";
         list<int> :: iterator temp;
         for(temp = adj_list[*it].begin(); temp != adj_list[*it].end();temp++)
             b.push_back(*temp);
         for(int ii=0;ii<b.size();ii++){
-            if(b[ii]==i){
+            if(b[ii]==i)
+            {
                 continue;
             }
-            else{
-                for(int jj=0;jj<a.size();jj++){
-                    if(a[jj]==*it){
+            else
+            {
+                for(int jj=0;jj<a.size();jj++)
+                {
+                    if(a[jj]==*it)
+                    {
                         continue;
                     }
-                    else{
-                        if(a[jj]==b[ii]){
+                    else
+                    {
+                        if(a[jj]==b[ii])
+                        {
                             countTriangle++;
                         }
                     }
@@ -39,9 +49,11 @@ void displayAdjList(list<int> adj_list[], int v) {
             }
         }
         b.clear();
-     }
-     cout << endl;
+    }
+    cout << endl;
+    a.clear();
    }
+   
    cout<<"No of triangles in the given adjaceny list: "<<countTriangle/6;
 }
 void add_edge(list<int> adj_list[], int u, int v) {   

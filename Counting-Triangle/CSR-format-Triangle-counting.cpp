@@ -1,6 +1,9 @@
 // Representing a Undirecetd Graph in CSR format in three 1-D array
 // Also excluding the case for self loop
 #include <bits/stdc++.h>
+#include <omp.h>
+#include<chrono>
+#define NUM_THREADS 10
 using namespace std;
 typedef std::vector<int> vi;
 typedef vector<vector<int> > matrix;
@@ -10,7 +13,7 @@ typedef vector<vector<int> > matrix;
 int main()
 {
     // enter the no of vertices
-    int n = 3;
+    int n = 6;
 
     // No. of edges in the undirected graph
     int Nz = 0;
@@ -136,7 +139,7 @@ int main()
             {
                 Na[k] = column[k + rowptr[i]];
             }
-            // vector to check the values using hashing
+            
             vi temp(n);
             // Intializing all values to 0
             for (int k = 0; k < n; k++)
@@ -149,48 +152,52 @@ int main()
                 temp[Na[k]] = 1;
             }
 
-            cout << "\n\nNeighbours of v1[" << i << "]: ";
-            for (int k = 0; k < Na.size(); k++)
+            // cout << "\n\nNeighbours of v1[" << i << "]: ";
+            // for (int k = 0; k < Na.size(); k++)
+            // {
+            //     cout << Na[k] << " ";
+            // }
+            // cout<<"\n--------------------";
+            omp_set_num_threads(NUM_THREADS);
+            #pragma omp parallel
             {
-                cout << Na[k] << " ";
-            }
-            cout<<"\n--------------------";
-
-            // iterating over the neighbours of each vertices
-            for (int j = rowptr[i]; j < rowptr[i] + difference; j++)
-            {
-                int v2 = column[j];
-                int count = rowptr[v2 + 1] - rowptr[v2]; // number of neighbours of v2
-                if (count > 0)
+                #pragma omp for
+                // iterating over the neighbours of each vertices
+                for (int j = rowptr[i]; j < rowptr[i] + difference; j++)
                 {
-                    // storing the neighbours of v2
-                    vi Nb;
-                    for (int k = rowptr[v2]; k < rowptr[v2] + count; k++)
+                    int v2 = column[j];
+                    int count = rowptr[v2 + 1] - rowptr[v2]; // number of neighbours of v2
+                    if (count > 0)
                     {
-                        Nb.push_back(column[k]);
-                    }
-
-                    cout << "\nNeighbours of v2[" << v2 << "]: ";
-                    for (int k = 0; k < Nb.size(); k++)
-                    {
-                        cout << Nb[k] << " ";
-                    }
-
-                    // checking the intersection of the both the vertices neighbours
-                    for (int k = 0; k < Nb.size(); k++)
-                    {
-                        if (temp[Nb[k]] == 1)
+                        // storing the neighbours of v2
+                        vi Nb;
+                        for (int k = rowptr[v2]; k < rowptr[v2] + count; k++)
                         {
-                            triangleResult++;
-                            cout << endl;
-                            cout << i << " " << v2 << " " << Nb[k];
+                            Nb.push_back(column[k]);
                         }
+
+                        // cout << "\nNeighbours of v2[" << v2 << "]: ";
+                        // for (int k = 0; k < Nb.size(); k++)
+                        // {
+                        //     cout << Nb[k] << " ";
+                        // }
+
+                        // checking the intersection of the both the vertices neighbours
+                        for (int k = 0; k < Nb.size(); k++)
+                        {
+                            if (temp[Nb[k]] == 1)
+                            {
+                                triangleResult++;
+                                // cout << endl;
+                                // cout << i << " " << v2 << " " << Nb[k];
+                            }
+                        }
+                        Nb.clear();
                     }
-                    Nb.clear();
-                }
-                else
-                {
-                    continue;
+                    else
+                    {
+                        continue;
+                    }
                 }
             }
             Na.clear();
